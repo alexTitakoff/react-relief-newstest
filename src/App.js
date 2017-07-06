@@ -69,9 +69,9 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      news: [
-
-      ]
+      news: '',
+      page: 1 ,
+      pagesArr: []
     }
   }
 
@@ -115,6 +115,12 @@ class App extends Component {
       news: normMassive,
       defaultNews: def
     })
+
+
+  }
+
+  componentDidMount() {
+    this.paginator(this.state.news, 2)
   }
 
   filter() {
@@ -161,16 +167,70 @@ class App extends Component {
 
   }
 
-  render() {
-        //this.alphabeticSort()
-    return (
+  paginator(arr, num) {
+    console.log(arr.length)
 
+
+    function isInt(n) {
+        if(n % 1 === 0) {
+          return true
+        } else {
+          return false
+        }
+    }
+
+
+    let pageAr = []
+
+    let chunkLength
+    if(isInt(arr.length/num)) {
+       chunkLength = arr.length/num
+    } else {
+      chunkLength = parseInt(arr.length/num) + 1
+
+    }
+
+    for(let i=0; i < chunkLength; i++) {
+      pageAr.push(arr.slice(0,2))
+    }
+
+
+
+    this.setState({
+      pagesArr: pageAr
+    })
+
+
+    console.log(pageAr);
+    return  pageAr[0]
+  }
+
+  render() {
+
+
+    return (
       <div className="App">
         <select name="" onChange={this.filter.bind(this)} id="" ref="filter" >
             <option  value='null' >Без фильтра</option>
             <option  value='filter_title' >По заголовку</option>
             <option  value='filter_date' >По дате</option>
         </select>
+        <nav aria-label="Page navigation">
+            <ul className="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li><a href="#">1</a></li>
+            
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+        </nav>
         <News news={this.state.news} />
       </div>
     );
