@@ -5,7 +5,7 @@ import EventItem from './EventItem.js'
 class News extends Component {
 
   render() {
-  console.log(this.props.news);
+  
     let newsItems
     if(this.props.news){
       newsItems = this.props.news.map(event => {
