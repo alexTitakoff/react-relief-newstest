@@ -9,8 +9,7 @@ class News extends Component {
     let newsItems
     if(this.props.news){
       newsItems = this.props.news.map(event => {
-          return ( <EventItem key={event.id} imgpath={event.PREVIEW_PATH}
-            />)
+          return ( <EventItem key={event.ID} imgpath={event.PREVIEW_PATH} date = {event.DATE} name={event.NAME} />)
       })
     }
 
